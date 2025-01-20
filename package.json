@@ -1,6 +1,6 @@
 {
     "name": "gulp-npm-module-publisher",
-    "version": "3.0.0",
+    "version": "3.0.5",
     "description": "Gulp scripts for compile and quick publish packages to npm",
     "scripts": {},
     "main": "gulpfile.js",

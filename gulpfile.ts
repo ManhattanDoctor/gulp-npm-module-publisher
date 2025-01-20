@@ -67,7 +67,10 @@ const nodeModulesClean = async (directory: string): Promise<void> => {
 
 const packageCopyFiles = async (): Promise<void> => {
   await filesCopy(
-    [`${projectDirectory}/package.json`],
+    [
+      `${projectDirectory}/package.json`,
+      `${projectDirectory}/README.md`
+    ],
     output
   );
 };
@@ -122,16 +125,13 @@ const packagePublish = async (
 ): Promise<void> => {
   // Build package or copy files
   await packageBuild();
-  // Commit project
-  await packageCommit();
-  // Push project
-  await packagePush();
   // Update version of package.js
+  await packageCommit();
   await run(`npm --prefix ${projectDirectory} version ${type}`)();
-  // Copy package.js
-  await filesCopy([`${projectDirectory}/package.json`], output);
   // Publish to npm
+  await run(`npm --prefix ${output} version ${type}`)();
   await run(`npm --prefix ${output} --access public publish ${output}`)();
+  await packagePush();
 };
 
 (() => {
